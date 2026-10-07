@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders & Live Order Tracking | Kishore Kumar Mart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div>🚚 Superfast 2-Hour Delivery in Trichy | 100% Fresh & Authentic Guarantee</div>
+      <div class="top-bar-links">
+        <a href="index.html#categories">Browse Aisles</a>
+        <a href="admin.html" id="admin-nav-link" style="color: #34d399; font-weight: 700; display: none;">⚙️ Admin Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="logo-brand">
+        <span>🛒 Kishore Kumar Mart</span>
+        <span class="logo-badge">Order Tracking</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="index.html" class="nav-btn">🏪 Store Home</a>
+        <a href="wishlist.html" class="nav-btn">♥ Wishlist</a>
+        <div class="user-menu-wrapper">
+          <button id="user-nav-btn" class="nav-btn">👤 <span>My Account</span></button>
+          <div id="user-dropdown" class="user-dropdown">
+            <a href="orders.html">📦 My Orders</a>
+            <a href="wishlist.html">♥ My Wishlist</a>
+            <a href="admin.html" id="admin-dropdown-link">⚙️ Admin Dashboard</a>
+            <button onclick="Auth.logout()" style="color: #ef4444; border-top: 1px solid #f1f5f9;">🚪 Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 2rem; margin-bottom: 3rem;">
+    <!-- PUBLIC TRACKING LOOKUP BAR -->
+    <div style="background: white; border: 1px solid var(--gray-200); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--dark);">Track Any Order by ID</h2>
+        <p style="font-size: 0.85rem; color: #64748b;">Enter your order number (e.g. KKM-123456) for instant status lookup.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem; width: 100%; max-width: 420px;">
+        <input type="text" id="track-order-input" class="form-control" placeholder="Enter Order # (e.g. KKM-123456)">
+        <button onclick="trackSpecificOrder()" class="nav-btn primary" style="border-radius: 8px;">Track</button>
+      </div>
+    </div>
+
+    <!-- TRACK RESULT BOX -->
+    <div id="tracked-order-result" style="display: none; margin-bottom: 2rem;"></div>
+
+    <!-- ORDERS LIST CONTAINER -->
+    <div style="margin-bottom: 1.25rem;">
+      <h2 style="font-size: 1.45rem; font-weight: 800; color: var(--dark);">Your Past & Active Orders</h2>
+      <p style="font-size: 0.85rem; color: #64748b;">View complete fulfillment history, items, and scheduled delivery details.</p>
+    </div>
+
+    <div id="orders-list">
+      <!-- Rendered dynamically by orders.js -->
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    async function trackSpecificOrder() {
+      const input = document.getElementById('track-order-input');
+      const val = input ? input.value.trim() : '';
+      if (!val) {
+        App.showToast('Please enter an order number', 'warning');
+        return;
+      }
+
+      try {
+        const res = await API.get(`/orders/track/${encodeURIComponent(val)}`);
+        const resultDiv = document.getElementById('tracked-order-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = Orders.renderOrderCard(res.data.order);
+        App.showToast('Order details retrieved!');
+      } catch (err) {
+        App.showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

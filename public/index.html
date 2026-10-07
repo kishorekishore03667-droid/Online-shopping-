@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kishore Kumar Mart | Fresh Groceries & Daily Essentials Delivered</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div>🚚 Superfast 2-Hour Delivery in Trichy | 100% Fresh & Authentic Guarantee</div>
+      <div class="top-bar-links">
+        <a href="#categories">Browse Aisles</a>
+        <a href="orders.html">Track Order</a>
+        <a href="admin.html" id="admin-nav-link" style="color: #34d399; font-weight: 700; display: none;">⚙️ Admin Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER & NAVIGATION -->
+  <header class="header">
+    <div class="container navbar">
+      <!-- LOGO -->
+      <a href="index.html" class="logo-brand">
+        <span>🛒 Kishore Kumar Mart</span>
+        <span class="logo-badge">Supermarket</span>
+      </a>
+
+      <!-- SEARCH INPUT -->
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" class="search-input" placeholder="Search 500+ fresh vegetables, dairy, pulses, snacks...">
+      </div>
+
+      <!-- NAV ACTIONS -->
+      <div class="nav-actions">
+        <!-- Wishlist -->
+        <a href="wishlist.html" class="nav-btn" title="Wishlist">
+          <span>♥</span> <span>Wishlist</span>
+          <span id="wishlist-badge" class="badge-counter" style="display: none;">0</span>
+        </a>
+
+        <!-- Cart Drawer Button -->
+        <button id="cart-nav-btn" class="nav-btn primary" title="View Cart">
+          <span>🛒</span> <span>Cart</span>
+          <span id="cart-badge" class="badge-counter" style="display: none;">0</span>
+        </button>
+
+        <!-- User Menu -->
+        <div class="user-menu-wrapper">
+          <button id="user-nav-btn" class="nav-btn">
+            👤 <span>Sign In</span>
+          </button>
+          <div id="user-dropdown" class="user-dropdown">
+            <a href="orders.html">📦 My Orders</a>
+            <a href="wishlist.html">♥ My Wishlist</a>
+            <a href="admin.html" id="admin-dropdown-link">⚙️ Admin Dashboard</a>
+            <button onclick="Auth.logout()" style="color: #ef4444; border-top: 1px solid #f1f5f9;">🚪 Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN STORE CONTENT -->
+  <main class="container">
+    
+    <!-- PROMOTIONAL HERO BANNER -->
+    <section class="hero-banner">
+      <div class="hero-content">
+        <span class="hero-badge">Mega Savings Festival</span>
+        <h1 class="hero-title">Fresh Farm Groceries & Daily Essentials At Your Doorstep</h1>
+        <p class="hero-subtitle">Get up to 25% OFF on fresh fruits, organic vegetables, pulses, and kitchen staples today.</p>
+        <div class="hero-features">
+          <div class="hero-feature-item">🌿 100% Quality Guaranteed</div>
+          <div class="hero-feature-item">⚡ Morning & Evening Slots</div>
+          <div class="hero-feature-item">💳 Cash on Delivery & UPI</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUE PERKS SECTION -->
+    <section class="perks-grid">
+      <div class="perk-card">
+        <div class="perk-icon">⚡</div>
+        <div>
+          <div class="perk-title">Scheduled Delivery</div>
+          <div class="perk-desc">Select your convenient time slot</div>
+        </div>
+      </div>
+      <div class="perk-card">
+        <div class="perk-icon">🏷️</div>
+        <div>
+          <div class="perk-title">Best Price Promise</div>
+          <div class="perk-desc">Direct from farms & mills</div>
+        </div>
+      </div>
+      <div class="perk-card">
+        <div class="perk-icon">🛡️</div>
+        <div>
+          <div class="perk-title">Hygienic Packaging</div>
+          <div class="perk-desc">Strict contactless safety standards</div>
+        </div>
+      </div>
+      <div class="perk-card">
+        <div class="perk-icon">🎁</div>
+        <div>
+          <div class="perk-title">Exclusive Coupons</div>
+          <div class="perk-desc">Use code <strong>WELCOME10</strong> for 10% off</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORY PILLS FILTER -->
+    <section class="category-section" id="categories">
+      <div class="section-header">
+        <h2 class="section-title">Shop by Category</h2>
+      </div>
+      <div class="category-scroll" id="category-pills">
+        <!-- Rendered dynamically by products.js -->
+      </div>
+    </section>
+
+    <!-- CATALOG WITH SIDEBAR FILTERS -->
+    <section class="catalog-layout">
+      <!-- SIDEBAR FILTERS -->
+      <aside class="filter-sidebar">
+        <div class="filter-group">
+          <div class="filter-heading">Availability</div>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" id="filter-instock">
+            <span>In-Stock Only</span>
+          </label>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-heading">Price Range (₹)</div>
+          <div class="price-slider-wrapper">
+            <div class="price-inputs">
+              <input type="number" id="filter-min-price" class="price-input" placeholder="Min ₹" min="0">
+              <span>-</span>
+              <input type="number" id="filter-max-price" class="price-input" placeholder="Max ₹" min="0">
+            </div>
+            <button id="apply-price-filter" class="nav-btn primary" style="width: 100%; border-radius: 8px; justify-content: center; margin-top: 0.5rem; font-size: 0.8rem;">
+              Apply Price Filter
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-heading">Promotions</div>
+          <div style="background: #ecfdf5; padding: 0.75rem; border-radius: 8px; border: 1px dashed #059669; font-size: 0.8rem; color: #047857;">
+            <strong>WELCOME10</strong><br>
+            10% OFF on first order above ₹300!
+          </div>
+        </div>
+      </aside>
+
+      <!-- PRODUCTS CONTAINER -->
+      <div>
+        <div class="catalog-toolbar">
+          <span class="results-count" id="results-count">Loading products...</span>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 0.85rem; color: #64748b; font-weight: 600;">Sort By:</span>
+            <select id="sort-select" class="sort-select">
+              <option value="default">Featured / Recommended</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="rating">Customer Rating</option>
+              <option value="newest">Newly Added</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- PRODUCT GRID -->
+        <div class="product-grid" id="product-grid">
+          <!-- Rendered dynamically by products.js -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CART SLIDEOUT DRAWER -->
+  <div id="cart-drawer-backdrop" class="drawer-backdrop"></div>
+  <aside id="cart-drawer" class="cart-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <span>🛒 Your Shopping Cart</span>
+      </div>
+      <button id="cart-drawer-close" class="drawer-close">&times;</button>
+    </div>
+
+    <!-- Free Shipping Progress Meter -->
+    <div class="free-shipping-meter">
+      <div id="free-shipping-text">Add ₹499 to get FREE Delivery!</div>
+      <div class="progress-bar-bg">
+        <div id="free-shipping-bar" class="progress-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Body -->
+    <div class="drawer-body" id="cart-items-container">
+      <!-- Rendered dynamically by cart.js -->
+    </div>
+
+    <!-- Cart Footer & Bill Summary -->
+    <div class="drawer-footer">
+      <div class="coupon-box">
+        <input type="text" id="coupon-input" class="coupon-input" placeholder="Promo Code (e.g. WELCOME10)">
+        <button id="apply-coupon-btn" class="coupon-btn">Apply</button>
+      </div>
+
+      <div class="bill-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">₹0.00</span>
+      </div>
+      <div class="bill-row" id="cart-discount-row" style="display: none; color: #059669; font-weight: 700;">
+        <span>Promo Discount</span>
+        <span id="cart-discount">-₹0.00</span>
+      </div>
+      <div class="bill-row">
+        <span>Delivery Fee</span>
+        <span id="cart-delivery">₹40.00</span>
+      </div>
+      <div class="bill-row total">
+        <span>Estimated Total</span>
+        <span id="cart-total">₹0.00</span>
+      </div>
+
+      <button id="cart-checkout-btn" class="checkout-btn">
+        Proceed to Checkout →
+      </button>
+    </div>
+  </aside>
+
+  <!-- AUTHENTICATION MODAL (LOGIN / REGISTER) -->
+  <div id="auth-modal" class="modal-backdrop">
+    <!-- Login Card -->
+    <div id="login-card" class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">Sign In to Your Account</div>
+        <button class="modal-close" onclick="Auth.closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="form-submit-btn">Sign In</button>
+        </form>
+        <div style="margin-top: 1rem; padding: 0.75rem; background: #f8fafc; border-radius: 8px; font-size: 0.8rem; color: #64748b;">
+          <strong>Demo Login:</strong><br>
+          Customer: <code>customer@example.com</code> / <code>customer123</code><br>
+          Admin: <code>admin@kishorekumarmart.com</code> / <code>admin123</code>
+        </div>
+        <div class="modal-toggle-text">
+          Don't have an account? <a onclick="Auth.showRegisterModal()">Create an Account</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Card -->
+    <div id="register-card" class="modal-card" style="display: none;">
+      <div class="modal-header">
+        <div class="modal-title">Join Kishore Kumar Mart</div>
+        <button class="modal-close" onclick="Auth.closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="register-form">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="reg-fullname" class="form-control" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="reg-phone" class="form-control" placeholder="+91 98765 43210">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Address</label>
+            <input type="text" id="reg-address" class="form-control" placeholder="Street, Flat, Area, City">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password (min 6 chars)</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="••••••••" minlength="6" required>
+          </div>
+          <button type="submit" class="form-submit-btn">Create Account</button>
+        </form>
+        <div class="modal-toggle-text">
+          Already have an account? <a onclick="Auth.showLoginModal()">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3>🛒 Kishore Kumar Mart</h3>
+        <p class="footer-desc">
+          Your neighborhood online supermarket delivering premium farm-fresh vegetables, organic fruits, daily dairy essentials, foodgrains, and household supplies with speedy doorstep delivery.
+        </p>
+      </div>
+      <div class="footer-column">
+        <h4>Aisles</h4>
+        <ul>
+          <li><a onclick="Products.filterByCategory('fruits-vegetables')">Fruits & Vegetables</a></li>
+          <li><a onclick="Products.filterByCategory('dairy-bakery')">Dairy & Breakfast</a></li>
+          <li><a onclick="Products.filterByCategory('foodgrains-oil-masala')">Staples & Spices</a></li>
+          <li><a onclick="Products.filterByCategory('snacks-beverages')">Snacks & Drinks</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Customer Care</h4>
+        <ul>
+          <li><a href="orders.html">Track Order</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
+          <li><a href="#categories">Shipping Policy</a></li>
+          <li><a href="admin.html">Staff Login</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Store Hours & Contact</h4>
+        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.6;">
+          📍 124 Supermarket Road, Commerce Complex, Trichy<br>
+          📞 Support: +91 98765 43210<br>
+          ⏰ Open Daily: 7:00 AM - 10:00 PM
+        </p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div>© 2026 Kishore Kumar Mart. All rights reserved. Designed for College Project Submission.</div>
+      <div>Powered by Node.js, Express & SQLite</div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT MODULES -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
