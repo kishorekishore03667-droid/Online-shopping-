@@ -2,10 +2,16 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
-// Ensure data directory exists
-const dbDir = path.resolve(__dirname, '../../data');
+// Ensure writable data directory exists (support Netlify / AWS Lambda read-only root)
+const isServerless = process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.LAMBDA_TASK_ROOT;
+const dbDir = isServerless ? '/tmp' : path.resolve(__dirname, '../../data');
+
 if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
+  try {
+    fs.mkdirSync(dbDir, { recursive: true });
+  } catch (e) {
+    console.warn('Could not create db directory:', e.message);
+  }
 }
 
 const dbPath = process.env.DB_PATH || path.join(dbDir, 'mart.db');
